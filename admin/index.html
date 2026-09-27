@@ -188,6 +188,14 @@
   .outlet-close-btn:hover{ border-color:var(--clay); color:var(--clay); }
   .outlet-sub{ color:var(--ink-soft); font-size:14px; margin:10px 0 22px; }
   .outlet-empty{ grid-column:1/-1; padding:60px 20px; text-align:center; color:var(--ink-soft); }
+
+  /* ---------- Introducción para el admin ---------- */
+  .onboarding-modal{ width:min(620px, 100%); position:relative; }
+  .onboarding-x{ position:absolute; top:18px; right:18px; }
+  .onboarding-list{ display:flex; flex-direction:column; gap:16px; margin-bottom:8px; }
+  .onboarding-item{ display:flex; gap:14px; align-items:flex-start; font-size:14px; color:var(--ink-soft); line-height:1.5; }
+  .onboarding-item strong{ color:var(--ink); }
+  .onboarding-emoji{ font-size:22px; flex-shrink:0; width:32px; text-align:center; }
   .card .art svg{ height:110px; width:auto; }
   .card .art img{ width:100%; height:100%; object-fit:cover; border-radius:12px; }
   .card .tag{ font-size:12.5px; color:var(--moss); margin-bottom:6px; }
@@ -235,6 +243,8 @@
   .empty-cart{ color:var(--ink-soft); font-size:14px; text-align:center; padding:40px 10px; }
   .drawer-foot{ padding:20px 24px 24px; border-top:1px solid var(--line); }
   .subtotal{ display:flex; justify-content:space-between; align-items:baseline; margin-bottom:16px; }
+  .subtotal-original{ display:flex; justify-content:space-between; align-items:baseline; margin-bottom:4px; font-size:12.5px; color:var(--ink-soft); }
+  .subtotal-original .num{ text-decoration:line-through; }
   .subtotal .num{ font-family:'Fraunces', serif; font-size:22px; color:var(--clay-deep); }
   .wa-btn{
     width:100%; background:var(--clay); color:#fff; border:none; border-radius:12px;
@@ -473,6 +483,7 @@
   </div>
   <div class="drawer-body" id="cartBody"></div>
   <div class="drawer-foot">
+    <div class="subtotal-original" id="cartSubtotalOriginal" style="display:none;"><span>Antes</span><span class="num"></span></div>
     <div class="subtotal"><span>Subtotal</span><span class="num" id="cartSubtotal">$0</span></div>
     <button class="wa-btn" id="waBtn">📲 Enviar pedido por WhatsApp</button>
     <button class="clear-cart" id="clearCartBtn">Vaciar carrito</button>
@@ -635,6 +646,13 @@
 
         <div class="section-title">Datos de contacto</div>
         <div class="field"><label>Número de WhatsApp (solo dígitos, con código de país)</label><input id="sWhatsapp" placeholder="573001234567"></div>
+        <div class="field">
+          <label>Mensaje de WhatsApp (plantilla)</label>
+          <textarea id="sWaTemplate" rows="5"></textarea>
+        </div>
+        <div class="config-note" style="margin-bottom:10px;">
+          Usa <strong>{items}</strong> donde quieras que aparezca la lista de productos del pedido, y <strong>{totales}</strong> donde quieras que aparezca el subtotal (con el precio original y el descuento, si aplica). El resto del texto lo escribes tú.
+        </div>
 
         <div class="section-title">Redes sociales (déjalo vacío para ocultar el ícono)</div>
         <div class="row2">
@@ -718,6 +736,41 @@
     <div class="modal-actions">
       <button class="btn btn-danger" id="logoutBtn">Cerrar sesión</button>
       <button class="btn btn-ghost" id="adminCloseBtn">Cerrar panel</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="onboardingOverlay">
+  <div class="modal onboarding-modal">
+    <button class="icon-btn onboarding-x" id="onboardingCloseBtn" title="Cerrar">✕</button>
+    <h2>¡Bienvenido al panel de tu tienda! 👋</h2>
+    <div class="config-note" style="margin:10px 0 18px;">
+      Esta es una guía rápida de qué hace cada parte del panel. Solo te la mostramos esta primera vez — luego puedes explorar tú mismo cuando quieras.
+    </div>
+    <div class="onboarding-list">
+      <div class="onboarding-item">
+        <div class="onboarding-emoji">🛍️</div>
+        <div><strong>Productos</strong><br>Agrega y edita tus productos: nombre, precio, foto, tallas (si aplica) y si están marcados como Outlet.</div>
+      </div>
+      <div class="onboarding-item">
+        <div class="onboarding-emoji">🏷️</div>
+        <div><strong>Categorías</strong><br>Organiza el catálogo (Pijamas, Zapatos, Maquillaje, o las que tú quieras).</div>
+      </div>
+      <div class="onboarding-item">
+        <div class="onboarding-emoji">📦</div>
+        <div><strong>Pedidos</strong><br>Cada vez que un cliente manda un pedido por WhatsApp, queda registrado aquí. Marca si se completó o no para llevar el inventario al día.</div>
+      </div>
+      <div class="onboarding-item">
+        <div class="onboarding-emoji">📊</div>
+        <div><strong>Estadísticas</strong><br>Cuánto vendiste por día, semana o mes, y cuáles fueron tus mejores y peores periodos.</div>
+      </div>
+      <div class="onboarding-item">
+        <div class="onboarding-emoji">🎨</div>
+        <div><strong>Apariencia y datos</strong><br>El nombre y textos de tu tienda, el carrusel de fotos del inicio, tus políticas, y las promociones (descuentos y Outlet).</div>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-primary" id="onboardingSkipBtn">Entendido, ¡empecemos!</button>
     </div>
   </div>
 </div>
@@ -824,7 +877,8 @@ const DEFAULT_SETTINGS = {
   outletEnabled: false,
   outletPercent: 30,
   outletColor: "#E4572E",
-  outletTitle: "Outlet"
+  outletTitle: "Outlet",
+  whatsappTemplate: "Hola, quiero hacer este pedido:\n\n{items}\n\n{totales}"
 };
 
 const CART_KEY = "lunaArcoiris_carrito_v1"; // el carrito sigue siendo local a cada visitante
@@ -1378,7 +1432,15 @@ function renderCart(){
   }
 
   const subtotal = items.reduce((s,i) => s + i.unitPrice * i.qty, 0);
+  const subtotalOriginal = items.reduce((s,i) => s + i.original * i.qty, 0);
   cartSubtotal.textContent = fmt(subtotal);
+  const origEl = document.getElementById('cartSubtotalOriginal');
+  if(subtotalOriginal > subtotal){
+    origEl.style.display = 'flex';
+    origEl.querySelector('.num').textContent = fmt(subtotalOriginal);
+  } else {
+    origEl.style.display = 'none';
+  }
   document.getElementById('waBtn').disabled = items.length === 0;
 }
 
@@ -1411,11 +1473,23 @@ document.getElementById('waBtn').addEventListener('click', async () => {
   const newTab = window.open('', '_blank');
 
   const subtotal = items.reduce((s,i) => s + i.unitPrice * i.qty, 0);
-  let msg = "Hola, quiero hacer este pedido:\n\n";
-  items.forEach(({product,qty,size,unitPrice}) => {
-    msg += `• ${product.name}${size ? ` (Talla ${size})` : ''} x${qty} — ${fmt(unitPrice * qty)}\n`;
-  });
-  msg += `\nSubtotal: ${fmt(subtotal)}`;
+  const subtotalOriginal = items.reduce((s,i) => s + i.original * i.qty, 0);
+
+  const itemsText = items.map(({product,qty,size,unitPrice,discounted,original}) => {
+    const label = `${product.name}${size ? ` (Talla ${size})` : ''} x${qty}`;
+    if(discounted){
+      return `• ${label} — ${fmt(unitPrice * qty)} (antes ${fmt(original * qty)})`;
+    }
+    return `• ${label} — ${fmt(unitPrice * qty)}`;
+  }).join('\n');
+
+  const totalesText = subtotalOriginal > subtotal
+    ? `Subtotal: ${fmt(subtotal)} (antes ${fmt(subtotalOriginal)} — ahorras ${fmt(subtotalOriginal - subtotal)})`
+    : `Subtotal: ${fmt(subtotal)}`;
+
+  const msg = (SETTINGS.whatsappTemplate || DEFAULT_SETTINGS.whatsappTemplate)
+    .replace('{items}', itemsText)
+    .replace('{totales}', totalesText);
   const url = `https://wa.me/${SETTINGS.whatsappNumber}?text=${encodeURIComponent(msg)}`;
 
   try{
@@ -1479,8 +1553,26 @@ function openAdmin(){
   document.getElementById('adminOrdersSection').style.display = 'none';
   document.getElementById('adminStatsSection').style.display = 'none';
   document.getElementById('adminSiteSection').style.display = 'none';
+  maybeShowOnboarding();
 }
 function closeAdmin(){ adminOverlay.classList.remove('open'); }
+
+/* ---------- Introducción para el administrador (solo la primera vez) ---------- */
+const ONBOARDING_KEY = 'lunaArcoirisAdminOnboardingSeen_v1';
+function maybeShowOnboarding(){
+  let seen = false;
+  try{ seen = localStorage.getItem(ONBOARDING_KEY) === '1'; }catch(e){ /* si el navegador bloquea localStorage, se mostrará cada vez */ }
+  if(!seen) document.getElementById('onboardingOverlay').classList.add('open');
+}
+function dismissOnboarding(){
+  document.getElementById('onboardingOverlay').classList.remove('open');
+  try{ localStorage.setItem(ONBOARDING_KEY, '1'); }catch(e){ /* no pasa nada si no se puede guardar */ }
+}
+document.getElementById('onboardingCloseBtn').addEventListener('click', dismissOnboarding);
+document.getElementById('onboardingSkipBtn').addEventListener('click', dismissOnboarding);
+document.getElementById('onboardingOverlay').addEventListener('click', e => {
+  if(e.target.id === 'onboardingOverlay') dismissOnboarding();
+});
 
 onAuthStateChanged(auth, (user) => {
   isAdmin = !!user;
@@ -1864,6 +1956,7 @@ function fillSiteForm(){
   document.getElementById('sFooter').value = SETTINGS.footerText;
   document.getElementById('sAccent').value = SETTINGS.accentColor;
   document.getElementById('sWhatsapp').value = SETTINGS.whatsappNumber;
+  document.getElementById('sWaTemplate').value = SETTINGS.whatsappTemplate;
   document.getElementById('sInstagram').value = SETTINGS.instagramUrl;
   document.getElementById('sFacebook').value = SETTINGS.facebookUrl;
   document.getElementById('sTiktok').value = SETTINGS.tiktokUrl;
@@ -1938,6 +2031,7 @@ document.getElementById('saveSiteBtn').addEventListener('click', async () => {
     footerText: document.getElementById('sFooter').value.trim() || DEFAULT_SETTINGS.footerText,
     accentColor: document.getElementById('sAccent').value || DEFAULT_SETTINGS.accentColor,
     whatsappNumber: document.getElementById('sWhatsapp').value.trim().replace(/[^\d]/g,'') || DEFAULT_SETTINGS.whatsappNumber,
+    whatsappTemplate: document.getElementById('sWaTemplate').value.trim() || DEFAULT_SETTINGS.whatsappTemplate,
     instagramUrl: document.getElementById('sInstagram').value.trim(),
     facebookUrl: document.getElementById('sFacebook').value.trim(),
     tiktokUrl: document.getElementById('sTiktok').value.trim(),
