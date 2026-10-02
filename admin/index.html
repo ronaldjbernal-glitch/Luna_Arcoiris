@@ -216,6 +216,16 @@
   .notif-more{ font-size:12px; color:var(--ink-soft); padding:4px 6px; }
   .notif-empty{ font-size:13.5px; color:var(--ink-soft); padding:20px 6px; text-align:center; }
 
+  .stats-filter-bar{
+    display:flex; gap:14px; align-items:flex-end; flex-wrap:wrap; margin-bottom:20px;
+    padding-bottom:20px; border-bottom:1px solid var(--line);
+  }
+  .stats-filter-bar .field{ min-width:150px; flex:0 0 auto; }
+  .stats-filter-bar select{
+    padding:11px 13px; border-radius:9px; border:1px solid var(--line);
+    background:var(--cream); color:var(--ink); font-family:inherit; font-size:14px; width:100%;
+  }
+
   /* ---------- Introducción para el admin ---------- */
   .onboarding-modal{ width:min(620px, 100%); position:relative; }
   .onboarding-x{ position:absolute; top:18px; right:18px; }
@@ -376,6 +386,16 @@
   .icon-sm:hover{ border-color:var(--clay); color:var(--clay); }
   .section-title{ font-family:'Fraunces', serif; font-size:17px; margin:32px 0 14px; padding-top:20px; border-top:1px solid var(--line); }
   .section-title:first-child{ margin-top:0; padding-top:0; border-top:none; }
+  .accordion-item{ border:1px solid var(--line); border-radius:12px; margin-bottom:12px; overflow:hidden; }
+  .accordion-header{
+    width:100%; display:flex; justify-content:space-between; align-items:center;
+    padding:16px 18px; background:var(--cream); border:none; cursor:pointer;
+    font-family:'Fraunces', serif; font-size:17px; color:var(--ink); text-align:left;
+  }
+  .accordion-header:hover{ background:var(--line); }
+  .accordion-arrow{ font-size:13px; color:var(--ink-soft); transition:transform .2s; }
+  .accordion-header.open .accordion-arrow{ transform:rotate(180deg); }
+  .accordion-body{ padding:22px 20px 26px; }
   .admin-tabs{ display:flex; gap:8px; margin:4px 0 18px; flex-wrap:wrap; }
 
   .sales-summary{ display:flex; gap:12px; margin:6px 0 16px; flex-wrap:wrap; }
@@ -653,19 +673,26 @@
     </div>
 
     <div id="adminStatsSection" style="display:none;">
-      <div class="admin-tabs" id="statsTabs" style="margin-bottom:14px;">
-        <button class="chip active" data-period="dia">Por día</button>
-        <button class="chip" data-period="semana">Por semana</button>
-        <button class="chip" data-period="mes">Por mes</button>
-        <button class="chip" data-period="anio">Por año</button>
-        <button class="chip" data-period="rango">Rango de fechas</button>
-      </div>
-      <div id="statsRangeInputs" style="display:none; margin-bottom:20px;">
-        <div class="row2">
-          <div class="field"><label>Desde</label><input type="date" id="statsRangeFrom"></div>
-          <div class="field"><label>Hasta</label><input type="date" id="statsRangeTo"></div>
+      <div class="stats-filter-bar">
+        <div class="field" style="margin-bottom:0;">
+          <label>Agrupar por</label>
+          <select id="statsPeriodSelect">
+            <option value="dia">Día</option>
+            <option value="semana">Semana</option>
+            <option value="mes">Mes</option>
+            <option value="anio">Año</option>
+          </select>
         </div>
-        <button class="btn btn-primary btn-sm" id="statsRangeApplyBtn">Aplicar rango</button>
+        <div class="field" style="margin-bottom:0;">
+          <label>Desde (opcional)</label>
+          <input type="date" id="statsRangeFrom">
+        </div>
+        <div class="field" style="margin-bottom:0;">
+          <label>Hasta (opcional)</label>
+          <input type="date" id="statsRangeTo">
+        </div>
+        <button class="btn btn-primary btn-sm" id="statsRangeApplyBtn">Filtrar</button>
+        <button class="btn btn-ghost btn-sm" id="statsRangeClearBtn">Quitar fechas</button>
       </div>
 
       <div class="sales-summary" id="statsBestWorst"></div>
@@ -686,15 +713,12 @@
     </div>
 
     <div id="adminSiteSection" style="display:none;">
-      <div class="admin-tabs" id="siteSubTabs" style="margin-bottom:16px;">
-        <button class="chip active" data-subtab="general">General</button>
-        <button class="chip" data-subtab="carrusel">Carrusel</button>
-        <button class="chip" data-subtab="politicas">Políticas</button>
-        <button class="chip" data-subtab="promos">Promociones</button>
-      </div>
-
-      <div id="siteGeneralSection">
-        <div class="section-title">Nombre y textos</div>
+      <div class="accordion-item">
+        <button type="button" class="accordion-header open" data-acc="siteGeneralSection">
+          <span>⚙️ General</span><span class="accordion-arrow">▾</span>
+        </button>
+      <div id="siteGeneralSection" class="accordion-body">
+        <div class="section-title" style="margin-top:0; padding-top:0; border-top:none;">Nombre y textos</div>
         <div class="field"><label>Nombre de la tienda</label><input id="sName" placeholder="Luna Arcoiris"></div>
         <div class="field"><label>Título del hero</label><textarea id="sHeroTitle" placeholder="Calidad a un buen precio, para ti."></textarea></div>
         <div class="field"><label>Descripción del hero</label><textarea id="sHeroSub" placeholder="Pijamas, zapatos, maquillaje y mucho más..."></textarea></div>
@@ -732,18 +756,28 @@
           <div class="field"><label>YouTube (link completo)</label><input id="sYoutube" placeholder="https://youtube.com/@tu_tienda"></div>
         </div>
       </div>
+      </div>
 
-      <div id="siteCarouselSection" style="display:none;">
-        <div class="section-title">Imágenes del carrusel del inicio (opcional)</div>
+      <div class="accordion-item">
+        <button type="button" class="accordion-header" data-acc="siteCarouselSection">
+          <span>🖼️ Carrusel</span><span class="accordion-arrow">▾</span>
+        </button>
+      <div id="siteCarouselSection" class="accordion-body" style="display:none;">
+        <div class="section-title" style="margin-top:0; padding-top:0; border-top:none;">Imágenes del carrusel del inicio (opcional)</div>
         <div class="config-note" style="margin-bottom:10px;">
           Van rotando automáticamente en el círculo de la página de inicio. Si no subes ninguna, se muestra el logo de la tienda. Máximo 5 imágenes.
         </div>
         <div id="heroImagesList" style="display:flex; flex-wrap:wrap; gap:10px; margin-bottom:10px;"></div>
         <input type="file" id="fHeroImageFile" accept="image/png, image/jpeg, image/webp">
       </div>
+      </div>
 
-      <div id="sitePoliciesSection" style="display:none;">
-        <div class="section-title">Quiénes somos</div>
+      <div class="accordion-item">
+        <button type="button" class="accordion-header" data-acc="sitePoliciesSection">
+          <span>📄 Políticas</span><span class="accordion-arrow">▾</span>
+        </button>
+      <div id="sitePoliciesSection" class="accordion-body" style="display:none;">
+        <div class="section-title" style="margin-top:0; padding-top:0; border-top:none;">Quiénes somos</div>
         <div class="field"><label>Título</label><input id="sAboutTitle" placeholder="Quiénes somos"></div>
         <div class="field"><label>Texto (usa doble salto de línea para separar párrafos)</label><textarea id="sAboutText" rows="5"></textarea></div>
 
@@ -755,9 +789,14 @@
         <div class="field"><label>Título</label><input id="sReturnsTitle" placeholder="Cambios y devoluciones"></div>
         <div class="field"><label>Texto (usa doble salto de línea para separar párrafos)</label><textarea id="sReturnsText" rows="6"></textarea></div>
       </div>
+      </div>
 
-      <div id="sitePromoSection" style="display:none;">
-        <div class="section-title">Descuento general (promoción activa)</div>
+      <div class="accordion-item">
+        <button type="button" class="accordion-header" data-acc="sitePromoSection">
+          <span>🏷️ Promociones</span><span class="accordion-arrow">▾</span>
+        </button>
+      <div id="sitePromoSection" class="accordion-body" style="display:none;">
+        <div class="section-title" style="margin-top:0; padding-top:0; border-top:none;">Descuento general (promoción activa)</div>
         <div class="config-note" style="margin-bottom:10px;">
           Actívalo cuando quieras una promoción para todo el catálogo. Se ve de una en los precios: el precio original tachado y el precio ya rebajado al lado.
         </div>
@@ -793,6 +832,7 @@
           <label>Color del tema Outlet</label>
           <input id="sOutletColor" type="color" style="height:42px; padding:4px; cursor:pointer;">
         </div>
+      </div>
       </div>
 
       <div class="modal-actions">
@@ -1821,18 +1861,6 @@ document.getElementById('adminTabs').addEventListener('click', e => {
   if(tab === 'estadisticas') renderStats();
 });
 
-document.getElementById('siteSubTabs').addEventListener('click', e => {
-  const btn = e.target.closest('.chip');
-  if(!btn) return;
-  document.querySelectorAll('#siteSubTabs .chip').forEach(c => c.classList.remove('active'));
-  btn.classList.add('active');
-  const sub = btn.dataset.subtab;
-  document.getElementById('siteGeneralSection').style.display = sub === 'general' ? 'block' : 'none';
-  document.getElementById('siteCarouselSection').style.display = sub === 'carrusel' ? 'block' : 'none';
-  document.getElementById('sitePoliciesSection').style.display = sub === 'politicas' ? 'block' : 'none';
-  document.getElementById('sitePromoSection').style.display = sub === 'promos' ? 'block' : 'none';
-});
-
 /* ---------- Panel admin: categorías ---------- */
 function renderCategoryList(){
   const list = document.getElementById('categoryList');
@@ -2051,7 +2079,7 @@ function renderStats(){
 
   let completed = ORDERS.filter(o => o.status === 'completado');
 
-  if(currentStatsPeriod === 'rango' && statsRangeFrom && statsRangeTo){
+  if(statsRangeFrom && statsRangeTo){
     const fromTs = statsRangeFrom.getTime();
     const toTs = statsRangeTo.getTime() + (24 * 60 * 60 * 1000) - 1;
     completed = completed.filter(o => {
@@ -2069,7 +2097,7 @@ function renderStats(){
     return;
   }
 
-  const bucketPeriod = currentStatsPeriod === 'rango' ? 'dia' : currentStatsPeriod;
+  const bucketPeriod = currentStatsPeriod;
   const groups = {};
   completed.forEach(o => {
     const ts = o.completedAt || o.createdAt;
@@ -2119,22 +2147,27 @@ function renderStats(){
   `;
   }).join('');
 }
-document.getElementById('statsTabs').addEventListener('click', e => {
-  const btn = e.target.closest('.chip');
-  if(!btn) return;
-  document.querySelectorAll('#statsTabs .chip').forEach(c => c.classList.remove('active'));
-  btn.classList.add('active');
-  currentStatsPeriod = btn.dataset.period;
-  document.getElementById('statsRangeInputs').style.display = currentStatsPeriod === 'rango' ? 'block' : 'none';
-  if(currentStatsPeriod !== 'rango' || (statsRangeFrom && statsRangeTo)) renderStats();
+document.getElementById('statsPeriodSelect').addEventListener('change', e => {
+  currentStatsPeriod = e.target.value;
+  renderStats();
 });
 document.getElementById('statsRangeApplyBtn').addEventListener('click', () => {
   const fromVal = document.getElementById('statsRangeFrom').value;
   const toVal = document.getElementById('statsRangeTo').value;
-  if(!fromVal || !toVal){ showToast("Elige las dos fechas del rango"); return; }
-  statsRangeFrom = new Date(fromVal + 'T00:00:00');
-  statsRangeTo = new Date(toVal + 'T00:00:00');
-  if(statsRangeFrom > statsRangeTo){ showToast("La fecha inicial debe ser antes que la final"); return; }
+  if(!fromVal && !toVal){ statsRangeFrom = null; statsRangeTo = null; renderStats(); return; }
+  if(!fromVal || !toVal){ showToast("Elige las dos fechas, o deja ambas vacías"); return; }
+  const from = new Date(fromVal + 'T00:00:00');
+  const to = new Date(toVal + 'T00:00:00');
+  if(from > to){ showToast("La fecha inicial debe ser antes que la final"); return; }
+  statsRangeFrom = from;
+  statsRangeTo = to;
+  renderStats();
+});
+document.getElementById('statsRangeClearBtn').addEventListener('click', () => {
+  statsRangeFrom = null;
+  statsRangeTo = null;
+  document.getElementById('statsRangeFrom').value = '';
+  document.getElementById('statsRangeTo').value = '';
   renderStats();
 });
 
@@ -2219,6 +2252,19 @@ document.getElementById('orderList').addEventListener('click', e => {
   if(e.target.closest('.cancel-order')) cancelOrder(order);
   if(e.target.closest('.revert-order')) revertOrder(order);
   if(e.target.closest('.delete-order')) deleteOrder(order);
+});
+
+document.querySelectorAll('.accordion-header').forEach(header => {
+  header.addEventListener('click', () => {
+    const body = document.getElementById(header.dataset.acc);
+    const isOpen = header.classList.contains('open');
+    document.querySelectorAll('.accordion-header').forEach(h => h.classList.remove('open'));
+    document.querySelectorAll('.accordion-body').forEach(b => b.style.display = 'none');
+    if(!isOpen){
+      header.classList.add('open');
+      body.style.display = 'block';
+    }
+  });
 });
 
 function fillSiteForm(){
