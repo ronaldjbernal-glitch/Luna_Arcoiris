@@ -1,14 +1,15 @@
-
+```html
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <meta name="theme-color" content="#f5f0ff">
   <meta name="robots" content="noindex, nofollow">
-  <meta name="description" content="Luna Arcoíris está renovando su tienda virtual. ¡Volvemos muy pronto!">
+  <meta name="description" content="Luna Arcoíris no está disponible temporalmente. Estamos trabajando para restablecer el servicio.">
 
-  <title>Luna Arcoíris | Volvemos pronto</title>
+  <title>Luna Arcoíris | Servicio temporalmente no disponible</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -27,23 +28,37 @@
       flex-direction: column;
       font-family: 'DM Sans', sans-serif;
       color: #292342;
+
       background:
-        radial-gradient(ellipse at 15% 15%, #fbe2f0 0%, transparent 38%),
-        radial-gradient(ellipse at 90% 80%, #dcecff 0%, transparent 38%),
+        radial-gradient(
+          ellipse at 15% 15%,
+          #fbe2f0 0%,
+          transparent 38%
+        ),
+        radial-gradient(
+          ellipse at 90% 80%,
+          #dcecff 0%,
+          transparent 38%
+        ),
         #f5f1ff;
+
       overflow-x: hidden;
     }
 
-    /* ENCABEZADO */
+    /* =========================
+       HEADER
+    ========================= */
 
     header {
       width: 100%;
       padding: 17px 6%;
+
       display: flex;
       align-items: center;
       justify-content: space-between;
+
       border-bottom: 1px solid #e9def4;
-      background: rgba(255,255,255,.4);
+      background: rgba(255,255,255,.42);
       backdrop-filter: blur(12px);
     }
 
@@ -51,9 +66,11 @@
       display: flex;
       align-items: center;
       gap: 10px;
+
       font-family: 'Playfair Display', serif;
       font-size: 22px;
       font-weight: 700;
+
       color: #292342;
     }
 
@@ -64,78 +81,184 @@
     .logo {
       width: 45px;
       height: 45px;
+
       border-radius: 50%;
+
       display: grid;
       place-items: center;
+
       font-size: 24px;
-      background: linear-gradient(135deg, #b8eaff, #e9b6e7, #fff);
+
+      background:
+        linear-gradient(
+          135deg,
+          #b8eaff,
+          #e9b6e7,
+          #fff
+        );
+
       border: 2px solid white;
-      box-shadow: 0 2px 12px #cdb5e9;
+
+      box-shadow:
+        0 2px 12px #cdb5e9;
     }
 
     .status {
       font-size: 12px;
       color: #9472ad;
+
       border: 1px solid #e5d4f2;
+
       background: #ffffffa8;
+
       padding: 8px 13px;
+
       border-radius: 30px;
     }
 
     .status i {
       display: inline-block;
+
       width: 7px;
       height: 7px;
-      background: #eaa1c0;
+
+      background: #e3a0bb;
+
       border-radius: 50%;
+
       margin-right: 6px;
+
       animation: pulse 1.8s infinite;
     }
 
-    /* CONTENIDO PRINCIPAL */
+    /* =========================
+       MAIN
+    ========================= */
 
     main {
       flex: 1;
+
       display: flex;
       align-items: center;
       justify-content: center;
+
       padding: 55px 20px;
     }
 
     .content {
       width: 100%;
-      max-width: 690px;
+      max-width: 700px;
+
       text-align: center;
+
       position: relative;
+
       padding: 10px;
     }
 
-    /* ILUSTRACIÓN */
+    /* =========================
+       ERROR ICON
+    ========================= */
 
     .illustration {
       width: 190px;
       height: 190px;
+
       border-radius: 50%;
+
       margin: 0 auto 30px;
-      display: grid;
-      place-items: center;
-      font-size: 86px;
-      background: linear-gradient(140deg, #d5f0ff, #f7d9ed 55%, #fff);
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      position: relative;
+
+      background:
+        linear-gradient(
+          140deg,
+          #d5f0ff,
+          #f7d9ed 55%,
+          #fff
+        );
+
       border: 8px solid #ffffffc9;
+
       box-shadow:
         0 15px 50px #bba5d85c,
         inset 0 0 20px #fff;
+
       animation: float 4s ease-in-out infinite;
     }
 
-    /* TÍTULO */
+    .error-icon {
+      font-size: 78px;
+      filter: drop-shadow(0 5px 8px #bca7d855);
+    }
+
+    .warning {
+      position: absolute;
+
+      right: 13px;
+      bottom: 12px;
+
+      width: 48px;
+      height: 48px;
+
+      display: grid;
+      place-items: center;
+
+      border-radius: 50%;
+
+      background: #fff;
+
+      border: 3px solid #f3d6e5;
+
+      font-size: 22px;
+
+      box-shadow: 0 5px 15px #bca7d833;
+    }
+
+    /* =========================
+       ERROR CODE
+    ========================= */
+
+    .error-code {
+      display: inline-block;
+
+      margin-bottom: 14px;
+
+      padding: 7px 14px;
+
+      border-radius: 20px;
+
+      font-size: 11px;
+      font-weight: 600;
+
+      letter-spacing: 1px;
+
+      color: #9a7ba9;
+
+      background: #ffffff99;
+
+      border: 1px solid #eadcf2;
+    }
+
+    /* =========================
+       TITLE
+    ========================= */
 
     h1 {
       font-family: 'Playfair Display', serif;
+
       font-size: clamp(34px, 6vw, 54px);
+
       line-height: 1.2;
+
       margin-bottom: 20px;
+
       letter-spacing: -.7px;
+
       color: #292342;
     }
 
@@ -143,60 +266,137 @@
       color: #dc83ad;
     }
 
-    /* DESCRIPCIÓN */
+    /* =========================
+       DESCRIPTION
+    ========================= */
 
     .description {
-      max-width: 510px;
+      max-width: 520px;
+
       margin: auto;
+
       color: #77708f;
+
       font-size: 16px;
+
       line-height: 1.9;
     }
 
-    /* DETALLES DECORATIVOS */
+    /* =========================
+       DIVIDER
+    ========================= */
 
     .divider {
       display: flex;
+
       align-items: center;
       justify-content: center;
+
       gap: 15px;
+
       margin: 27px 0;
+
       color: #cf8cb6;
+
       font-size: 18px;
     }
 
     .divider::before,
     .divider::after {
       content: "";
+
       width: 55px;
       height: 1px;
+
       background: #e6cbe4;
     }
 
-    /* MENSAJE */
+    /* =========================
+       NOTICE
+    ========================= */
 
     .notice {
-      display: inline-block;
+      display: inline-flex;
+
+      align-items: center;
+      gap: 8px;
+
       background: #ffffffa8;
+
       border: 1px solid #ead9f2;
+
       border-radius: 30px;
+
       padding: 12px 22px;
+
       color: #9871a8;
+
       font-size: 13px;
-      box-shadow: 0 5px 20px #c8b4dc24;
+
+      box-shadow:
+        0 5px 20px #c8b4dc24;
     }
 
-    .notice span {
+    .notice strong {
       color: #df83ac;
     }
 
-    /* ESTRELLAS */
+    /* =========================
+       RETRY BUTTON
+    ========================= */
+
+    .retry {
+      display: inline-block;
+
+      margin-top: 22px;
+
+      padding: 11px 22px;
+
+      border-radius: 25px;
+
+      text-decoration: none;
+
+      color: #fff;
+
+      font-size: 13px;
+      font-weight: 600;
+
+      background:
+        linear-gradient(
+          135deg,
+          #d68bb2,
+          #b99bda
+        );
+
+      box-shadow:
+        0 7px 20px #b99bda44;
+
+      transition:
+        transform .2s ease,
+        box-shadow .2s ease;
+    }
+
+    .retry:hover {
+      transform: translateY(-2px);
+
+      box-shadow:
+        0 10px 25px #b99bda66;
+    }
+
+    /* =========================
+       DECORACIÓN
+    ========================= */
 
     .decor {
       position: absolute;
+
       color: #d9a4ce;
+
       font-size: 23px;
-      animation: twinkle 2.5s ease-in-out infinite alternate;
+
+      animation:
+        twinkle 2.5s ease-in-out infinite alternate;
+
       pointer-events: none;
     }
 
@@ -223,15 +423,23 @@
       animation-delay: .5s;
     }
 
-    /* PIE DE PÁGINA */
+    /* =========================
+       FOOTER
+    ========================= */
 
     footer {
       padding: 20px;
+
       text-align: center;
+
       color: #9588ad;
+
       font-size: 13px;
+
       line-height: 1.8;
+
       border-top: 1px solid #e9def4;
+
       background: #ffffff4a;
     }
 
@@ -244,42 +452,60 @@
       color: #e77ba5;
     }
 
-    /* ANIMACIONES */
+    /* =========================
+       ANIMACIONES
+    ========================= */
 
     @keyframes float {
+
       0%, 100% {
         transform: translateY(0);
       }
+
       50% {
         transform: translateY(-10px);
       }
+
     }
 
     @keyframes twinkle {
+
       from {
         opacity: .4;
         transform: scale(.85);
       }
+
       to {
         opacity: 1;
         transform: scale(1.15);
       }
+
     }
 
     @keyframes pulse {
+
       0%, 100% {
         opacity: 1;
-        box-shadow: 0 0 0 0 #eaa1c080;
+
+        box-shadow:
+          0 0 0 0 #eaa1c080;
       }
+
       50% {
         opacity: .6;
-        box-shadow: 0 0 0 5px #eaa1c000;
+
+        box-shadow:
+          0 0 0 5px #eaa1c000;
       }
+
     }
 
-    /* DISEÑO PARA CELULARES */
+    /* =========================
+       MOBILE
+    ========================= */
 
     @media (max-width: 600px) {
+
       header {
         padding: 14px 5%;
       }
@@ -291,6 +517,7 @@
       .logo {
         width: 37px;
         height: 37px;
+
         font-size: 20px;
       }
 
@@ -306,8 +533,22 @@
       .illustration {
         width: 150px;
         height: 150px;
-        font-size: 68px;
-        margin-bottom: 27px;
+
+        margin-bottom: 25px;
+      }
+
+      .error-icon {
+        font-size: 65px;
+      }
+
+      .warning {
+        width: 40px;
+        height: 40px;
+
+        right: 7px;
+        bottom: 7px;
+
+        font-size: 18px;
       }
 
       h1 {
@@ -343,89 +584,178 @@
       footer {
         padding: 17px;
       }
+
     }
 
-    /* ACCESIBILIDAD */
+    /* =========================
+       ACCESIBILIDAD
+    ========================= */
 
     @media (prefers-reduced-motion: reduce) {
+
       *,
       *::before,
       *::after {
+
         animation-duration: .01ms !important;
+
         animation-iteration-count: 1 !important;
+
         scroll-behavior: auto !important;
+
       }
+
     }
+
   </style>
 </head>
 
 <body>
 
-  <!-- ENCABEZADO -->
+  <!-- HEADER -->
+
   <header>
+
     <div class="brand">
-      <div class="logo">🌙</div>
-      <div>Luna <span>Arcoíris</span></div>
+
+      <div class="logo">
+        🌙
+      </div>
+
+      <div>
+        Luna <span>Arcoíris</span>
+      </div>
+
     </div>
 
     <div class="status">
-      <i></i> En renovación
+      <i></i>
+      Servicio temporalmente no disponible
     </div>
+
   </header>
 
+
   <!-- CONTENIDO -->
+
   <main>
+
     <section class="content">
 
-      <!-- ELEMENTOS DECORATIVOS -->
+      <!-- DECORACIÓN -->
+
       <span class="decor d1">✦</span>
       <span class="decor d2">✧</span>
       <span class="decor d3">♡</span>
       <span class="decor d4">✦</span>
 
+
       <!-- ILUSTRACIÓN -->
+
       <div class="illustration">
-        🌙
+
+        <div class="error-icon">
+          🌙
+        </div>
+
+        <div class="warning">
+          ⚠
+        </div>
+
       </div>
+
+
+      <!-- CÓDIGO -->
+
+      <div class="error-code">
+        ERROR 503 · SERVICIO NO DISPONIBLE
+      </div>
+
 
       <!-- TÍTULO -->
+
       <h1>
-        ¡Estamos preparando<br>
-        algo <span>bonito!</span>
+
+        Volveremos
+        <span>muy pronto</span>
+
       </h1>
 
+
       <!-- DESCRIPCIÓN -->
+
       <p class="description">
-        En Luna Arcoíris estamos renovando nuestra
-        tienda para ofrecerte una experiencia aún más
-        especial. Estamos trabajando en nuevos detalles
-        para que cada visita sea única.
+
+        Parece que Luna Arcoíris está tomando
+        un pequeño descanso.
+
+        <br>
+
+        Nuestro sitio se encuentra temporalmente
+        fuera de servicio mientras realizamos
+        algunos ajustes.
+
       </p>
 
-      <!-- SEPARADOR -->
+
+      <!-- DIVISOR -->
+
       <div class="divider">
+
         ✧ ♡ ✧
+
       </div>
 
+
       <!-- MENSAJE -->
+
       <div class="notice">
-        <span>♡</span>
-        Muy pronto estaremos de vuelta
-        <span>♡</span>
+
+        <strong>♡</strong>
+
+        Estamos trabajando para volver a estar disponibles
+
+        <strong>♡</strong>
+
+      </div>
+
+
+      <!-- BOTÓN -->
+
+      <div>
+
+        <a
+          href="javascript:location.reload()"
+          class="retry"
+        >
+          ↻ &nbsp; Intentar nuevamente
+        </a>
+
       </div>
 
     </section>
+
   </main>
 
-  <!-- PIE DE PÁGINA -->
+
+  <!-- FOOTER -->
+
   <footer>
+
     <div>
-      Luna Arcoíris <span class="heart">♡</span>
+      Luna Arcoíris
+      <span class="heart">♡</span>
     </div>
+
     <div class="creator">
-      Creado con <span class="heart">♡</span> por Jhoan Bernal
+
+      Servicio temporalmente no disponible
+
     </div>
+
   </footer>
 
 </body>
+
 </html>
+```
