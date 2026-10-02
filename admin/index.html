@@ -7,25 +7,34 @@
   <meta name="theme-color" content="#f5f0ff">
   <meta name="robots" content="noindex, nofollow">
   <meta name="description" content="Luna Arcoíris está renovando su tienda virtual. ¡Volvemos muy pronto!">
+
   <title>Luna Arcoíris | Volvemos pronto</title>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
   <style>
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
     body {
-      margin: 0;
       min-height: 100vh;
+      display: flex;
+      flex-direction: column;
       font-family: 'DM Sans', sans-serif;
       color: #292342;
       background:
         radial-gradient(ellipse at 15% 15%, #fbe2f0 0%, transparent 38%),
         radial-gradient(ellipse at 90% 80%, #dcecff 0%, transparent 38%),
         #f5f1ff;
-      display: flex;
-      flex-direction: column;
+      overflow-x: hidden;
     }
+
+    /* ENCABEZADO */
 
     header {
       width: 100%;
@@ -35,6 +44,7 @@
       justify-content: space-between;
       border-bottom: 1px solid #e9def4;
       background: rgba(255,255,255,.4);
+      backdrop-filter: blur(12px);
     }
 
     .brand {
@@ -44,13 +54,16 @@
       font-family: 'Playfair Display', serif;
       font-size: 22px;
       font-weight: 700;
+      color: #292342;
     }
 
-    .brand span { color: #e77ba5; }
+    .brand span {
+      color: #e77ba5;
+    }
 
     .logo {
-      width: 43px;
-      height: 43px;
+      width: 45px;
+      height: 45px;
       border-radius: 50%;
       display: grid;
       place-items: center;
@@ -64,7 +77,7 @@
       font-size: 12px;
       color: #9472ad;
       border: 1px solid #e5d4f2;
-      background: #fff9;
+      background: #ffffffa8;
       padding: 8px 13px;
       border-radius: 30px;
     }
@@ -76,7 +89,10 @@
       background: #eaa1c0;
       border-radius: 50%;
       margin-right: 6px;
+      animation: pulse 1.8s infinite;
     }
+
+    /* CONTENIDO PRINCIPAL */
 
     main {
       flex: 1;
@@ -91,7 +107,10 @@
       max-width: 690px;
       text-align: center;
       position: relative;
+      padding: 10px;
     }
+
+    /* ILUSTRACIÓN */
 
     .illustration {
       width: 190px;
@@ -103,22 +122,28 @@
       font-size: 86px;
       background: linear-gradient(140deg, #d5f0ff, #f7d9ed 55%, #fff);
       border: 8px solid #ffffffc9;
-      box-shadow: 0 15px 50px #bba5d85c,
-                  inset 0 0 20px #fff;
+      box-shadow:
+        0 15px 50px #bba5d85c,
+        inset 0 0 20px #fff;
       animation: float 4s ease-in-out infinite;
     }
+
+    /* TÍTULO */
 
     h1 {
       font-family: 'Playfair Display', serif;
       font-size: clamp(34px, 6vw, 54px);
-      line-height: 1.15;
-      margin: 0 0 18px;
+      line-height: 1.2;
+      margin-bottom: 20px;
       letter-spacing: -.7px;
+      color: #292342;
     }
 
     h1 span {
       color: #dc83ad;
     }
+
+    /* DESCRIPCIÓN */
 
     .description {
       max-width: 510px;
@@ -127,6 +152,8 @@
       font-size: 16px;
       line-height: 1.9;
     }
+
+    /* DETALLES DECORATIVOS */
 
     .divider {
       display: flex;
@@ -138,12 +165,15 @@
       font-size: 18px;
     }
 
-    .divider::before, .divider::after {
+    .divider::before,
+    .divider::after {
       content: "";
       width: 55px;
       height: 1px;
       background: #e6cbe4;
     }
+
+    /* MENSAJE */
 
     .notice {
       display: inline-block;
@@ -156,83 +186,215 @@
       box-shadow: 0 5px 20px #c8b4dc24;
     }
 
-    .notice span { color: #df83ac; }
+    .notice span {
+      color: #df83ac;
+    }
+
+    /* ESTRELLAS */
 
     .decor {
       position: absolute;
       color: #d9a4ce;
       font-size: 23px;
       animation: twinkle 2.5s ease-in-out infinite alternate;
+      pointer-events: none;
     }
 
-    .d1 { top: 35px; left: 8%; }
-    .d2 { top: 110px; right: 9%; animation-delay: .8s; }
-    .d3 { bottom: 65px; left: 13%; animation-delay: 1.2s; }
-    .d4 { bottom: 110px; right: 12%; animation-delay: .5s; }
+    .d1 {
+      top: 35px;
+      left: 8%;
+    }
+
+    .d2 {
+      top: 110px;
+      right: 9%;
+      animation-delay: .8s;
+    }
+
+    .d3 {
+      bottom: 65px;
+      left: 13%;
+      animation-delay: 1.2s;
+    }
+
+    .d4 {
+      bottom: 110px;
+      right: 12%;
+      animation-delay: .5s;
+    }
+
+    /* PIE DE PÁGINA */
 
     footer {
       padding: 20px;
       text-align: center;
       color: #9588ad;
-      font-size: 12px;
+      font-size: 13px;
+      line-height: 1.8;
       border-top: 1px solid #e9def4;
       background: #ffffff4a;
     }
 
+    footer .creator {
+      font-size: 12px;
+      color: #b18bb9;
+    }
+
+    footer .heart {
+      color: #e77ba5;
+    }
+
+    /* ANIMACIONES */
+
     @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-10px);
+      }
     }
 
     @keyframes twinkle {
-      from { opacity: .4; transform: scale(.85); }
-      to { opacity: 1; transform: scale(1.15); }
+      from {
+        opacity: .4;
+        transform: scale(.85);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1.15);
+      }
     }
+
+    @keyframes pulse {
+      0%, 100% {
+        opacity: 1;
+        box-shadow: 0 0 0 0 #eaa1c080;
+      }
+      50% {
+        opacity: .6;
+        box-shadow: 0 0 0 5px #eaa1c000;
+      }
+    }
+
+    /* DISEÑO PARA CELULARES */
 
     @media (max-width: 600px) {
-      header { padding: 14px 5%; }
-      .brand { font-size: 18px; }
-      .logo { width: 37px; height: 37px; }
-      .status { font-size: 10px; padding: 7px 9px; }
-      main { padding: 45px 23px; }
-      .illustration { width: 150px; height: 150px; font-size: 68px; }
-      .description { font-size: 14px; }
-      .d1 { left: 0; }
-      .d2 { right: 0; }
-      .d3 { left: 0; }
-      .d4 { right: 0; }
+      header {
+        padding: 14px 5%;
+      }
+
+      .brand {
+        font-size: 18px;
+      }
+
+      .logo {
+        width: 37px;
+        height: 37px;
+        font-size: 20px;
+      }
+
+      .status {
+        font-size: 10px;
+        padding: 7px 9px;
+      }
+
+      main {
+        padding: 45px 23px;
+      }
+
+      .illustration {
+        width: 150px;
+        height: 150px;
+        font-size: 68px;
+        margin-bottom: 27px;
+      }
+
+      h1 {
+        font-size: 35px;
+      }
+
+      .description {
+        font-size: 14px;
+        line-height: 1.8;
+      }
+
+      .notice {
+        font-size: 12px;
+        padding: 11px 16px;
+      }
+
+      .d1 {
+        left: 0;
+      }
+
+      .d2 {
+        right: 0;
+      }
+
+      .d3 {
+        left: 0;
+      }
+
+      .d4 {
+        right: 0;
+      }
+
+      footer {
+        padding: 17px;
+      }
     }
 
+    /* ACCESIBILIDAD */
+
     @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
+      *,
+      *::before,
+      *::after {
         animation-duration: .01ms !important;
         animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
       }
     }
   </style>
 </head>
+
 <body>
+
+  <!-- ENCABEZADO -->
   <header>
     <div class="brand">
       <div class="logo">🌙</div>
-      Luna <span>Arcoíris</span>
+      <div>Luna <span>Arcoíris</span></div>
     </div>
-    <div class="status"><i></i> En renovación</div>
+
+    <div class="status">
+      <i></i> En renovación
+    </div>
   </header>
 
+  <!-- CONTENIDO -->
   <main>
     <section class="content">
+
+      <!-- ELEMENTOS DECORATIVOS -->
       <span class="decor d1">✦</span>
       <span class="decor d2">✧</span>
       <span class="decor d3">♡</span>
       <span class="decor d4">✦</span>
 
-      <div class="illustration">🌙</div>
+      <!-- ILUSTRACIÓN -->
+      <div class="illustration">
+        🌙
+      </div>
 
-      <h1>¡Estamos preparando<br>
+      <!-- TÍTULO -->
+      <h1>
+        ¡Estamos preparando<br>
         algo <span>bonito!</span>
       </h1>
 
+      <!-- DESCRIPCIÓN -->
       <p class="description">
         En Luna Arcoíris estamos renovando nuestra
         tienda para ofrecerte una experiencia aún más
@@ -240,17 +402,30 @@
         para que cada visita sea única.
       </p>
 
-      <div class="divider">✧ ♡ ✧</div>
+      <!-- SEPARADOR -->
+      <div class="divider">
+        ✧ ♡ ✧
+      </div>
 
+      <!-- MENSAJE -->
       <div class="notice">
-        <span>♡</span> Muy pronto estaremos de vuelta
+        <span>♡</span>
+        Muy pronto estaremos de vuelta
         <span>♡</span>
       </div>
+
     </section>
   </main>
 
+  <!-- PIE DE PÁGINA -->
   <footer>
-    Luna Arcoíris · Piezas hechas a mano, una por una. ♡
+    <div>
+      Luna Arcoíris <span class="heart">♡</span>
+    </div>
+    <div class="creator">
+      Creado con <span class="heart">♡</span> por Jhoan Bernal
+    </div>
   </footer>
+
 </body>
 </html>
