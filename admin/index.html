@@ -597,10 +597,7 @@
 <div class="modal-overlay" id="adminOverlay">
   <div class="modal">
     <h2>Panel de administrador</h2>
-    <p class="sub">Edita productos o la apariencia y los datos del sitio. Los cambios se guardan en este navegador.</p>
-    <div class="config-note">
-      Los cambios se guardan en Firestore y se ven al instante para cualquiera que tenga el link abierto. El acceso de administrador usa tu cuenta de Firebase (correo y contraseña) — ya no una clave compartida.
-    </div>
+    <p class="sub">Edita productos, categorías, pedidos y la apariencia de tu tienda.</p>
 
     <div class="admin-tabs" id="adminTabs">
       <button class="chip active" data-tab="productos">Productos</button>
@@ -772,9 +769,6 @@
 
         <div class="section-title">Notificaciones por correo</div>
         <div class="field"><label>Correo para avisos de pedidos e inventario bajo</label><input id="sNotifyEmail" type="email" placeholder="tucorreo@ejemplo.com"></div>
-        <div class="config-note" style="margin-bottom:10px;">
-          Para que estos correos realmente lleguen, necesitas instalar la extensión gratuita de Firebase <strong>"Trigger Email from Firestore"</strong> una sola vez en tu proyecto (se conecta con tu proveedor de correo). Si no la instalas, todo lo demás del sitio sigue funcionando igual, simplemente no llegan los correos.
-        </div>
 
         <div class="section-title">Redes sociales (déjalo vacío para ocultar el ícono)</div>
         <div class="row2">
