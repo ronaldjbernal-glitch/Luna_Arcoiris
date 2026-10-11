@@ -10,6 +10,18 @@
 
   .brand-wrap{ display:flex; align-items:center; gap:12px; }
   .brand-logo{ width:42px; height:42px; border-radius:50%; flex-shrink:0; box-shadow:0 0 0 2px var(--card), 0 0 0 3px var(--line); }
+  @media (prefers-reduced-motion: no-preference){
+    .brand-logo{ animation:logo-float 4.5s ease-in-out infinite; }
+    .hero-logo-halo{ animation:logo-float-big 5.5s ease-in-out infinite; }
+  }
+  @keyframes logo-float{
+    0%, 100%{ transform:translateY(0) rotate(0deg); }
+    50%{ transform:translateY(-3px) rotate(-2deg); }
+  }
+  @keyframes logo-float-big{
+    0%, 100%{ transform:translateY(0); }
+    50%{ transform:translateY(-8px); }
+  }
   .hero-art{ position:relative; }
   .hero-logo-halo{
     position:relative; width:min(78%, 320px); aspect-ratio:1/1; display:flex; align-items:center; justify-content:center;
@@ -100,6 +112,13 @@
   .icon-btn:hover{ border-color:var(--clay); color:var(--clay); }
   .icon-btn-wide{ width:auto; padding:0 14px; gap:6px; font-size:14px; }
   .icon-btn-wide .icon-label{ font-size:12.5px; font-weight:500; }
+  .quote-cta{
+    display:flex; align-items:center; font-size:13px; font-weight:600; white-space:nowrap;
+    color:#fff; background:var(--clay); padding:0 16px; height:38px; border-radius:999px;
+    text-decoration:none; transition:.15s;
+  }
+  .quote-cta:hover{ background:var(--clay-deep); }
+  @media (max-width:640px){ .quote-cta{ padding:0 12px; font-size:12px; } }
   .online-pill{
     display:flex; align-items:center; gap:6px; border:1px solid var(--line); border-radius:999px;
     padding:6px 10px; font-size:12px; color:var(--ink-soft); background:var(--card);
@@ -131,6 +150,13 @@
   .hero .meta{ margin-top:26px; display:flex; gap:26px; flex-wrap:wrap; }
   .hero .meta div{ font-size:13.5px; color:var(--ink-soft); }
   .hero .meta strong{ display:block; font-family:'Fraunces', serif; font-size:24px; color:var(--ink); font-weight:500; }
+  @media (prefers-reduced-motion: no-preference){
+    .hero .meta div{ opacity:0; transform:translateY(8px); transition:opacity .5s ease, transform .5s ease; }
+    .hero .meta.in-view div{ opacity:1; transform:translateY(0); }
+    .hero .meta.in-view div:nth-child(1){ transition-delay:0s; }
+    .hero .meta.in-view div:nth-child(2){ transition-delay:.12s; }
+    .hero .meta.in-view div:nth-child(3){ transition-delay:.24s; }
+  }
   #onlineWrap strong::before{
     content:""; display:inline-block; width:9px; height:9px; border-radius:50%;
     background:#3FC96B; margin-right:6px; vertical-align:middle;
@@ -474,12 +500,12 @@
     padding:16px clamp(20px,4vw,56px); display:flex; justify-content:center;
   }
   .dev-credit-inner{
-    display:flex; align-items:center; gap:16px; flex-wrap:wrap; justify-content:center; max-width:720px;
+    display:flex; align-items:center; gap:12px; flex-wrap:wrap; justify-content:center; max-width:640px;
   }
   .dev-cube-wrap{
-    width:92px; height:92px; flex-shrink:0; display:flex; align-items:center; justify-content:center; overflow:hidden;
+    width:60px; height:60px; flex-shrink:0; display:flex; align-items:center; justify-content:center; overflow:hidden;
   }
-  .dev-cube-scale{ transform:scale(0.42); }
+  .dev-cube-scale{ transform:scale(0.27); }
   .dev-scene{
     position:relative; width:240px; height:240px; perspective:800px; cursor:grab; touch-action:none; user-select:none;
   }
@@ -494,11 +520,11 @@
   .devf-icon{ font-size:40px; line-height:1; }
   .devf span:last-child{ font-size:12px; font-weight:500; }
   .dev-credit-text{ text-align:center; }
-  .dev-credit-name{ font-size:13.5px; font-weight:600; color:var(--ink); }
-  .dev-credit-role{ font-size:12px; color:var(--ink-soft); margin-top:2px; }
+  .dev-credit-name{ font-size:12px; font-weight:600; color:var(--ink); }
+  .dev-credit-role{ font-size:10.5px; color:var(--ink-soft); margin-top:1px; }
   .dev-credit-cta{
-    display:inline-flex; align-items:center; gap:6px; font-size:13px; font-weight:600;
-    color:#fff; background:var(--moss); padding:9px 18px; border-radius:999px; text-decoration:none;
+    display:inline-flex; align-items:center; gap:5px; font-size:11.5px; font-weight:600;
+    color:#fff; background:var(--moss); padding:6px 13px; border-radius:999px; text-decoration:none;
     transition:.15s;
   }
   .dev-credit-cta:hover{ background:var(--clay); }
@@ -594,6 +620,7 @@
   </div>
   <div class="header-actions">
     <button class="link-btn" id="adminOpenBtn">Administrar</button>
+    <a class="quote-cta" id="quoteCtaBtn" href="#" target="_blank" rel="noopener" title="Pide un presupuesto para algo que no está en el catálogo">Cotiza con nosotros</a>
     <div class="online-pill" id="onlinePill" style="display:none;" title="Personas viendo el sitio ahora">
       <span class="dot"></span><span id="onlineCount">0</span>
     </div>
@@ -622,8 +649,8 @@
       <h1 id="heroTitle">Abraza la calidad,<br>siente la tradición.</h1>
       <p class="lede" id="heroSubtitle">Ruanas, bufandas, amigurumis y piezas para el hogar, tejidas a mano una por una. Envíos a toda Bogotá, pedido directo por WhatsApp.</p>
       <div class="meta" id="heroMeta">
-        <div><strong id="metaCount">0</strong>piezas en catálogo</div>
-        <div><strong>100%</strong>tejido a mano</div>
+        <div><strong id="metaCount" class="hero-meta-num">0</strong>piezas en catálogo</div>
+        <div><strong id="metaHandmade" class="hero-meta-num" data-suffix="%">0</strong>tejido a mano</div>
         <div><strong>Hecho</strong> con calma</div>
       </div>
     </div>
@@ -767,16 +794,38 @@
 <div class="modal-overlay" id="loginOverlay">
   <div class="modal">
     <h2>Acceso administrador</h2>
-    <p class="sub">Ingresa tu correo y contraseña para editar el catálogo.</p>
-    <div class="field">
-      <label>Correo</label>
-      <input type="email" id="loginEmail" placeholder="tu@correo.com" autocomplete="username">
+    <p class="sub">Ingresa con tu correo o tu número de celular para editar el catálogo.</p>
+
+    <div class="login-method-tabs" id="loginMethodTabs" style="display:flex; gap:8px; margin-bottom:18px;">
+      <button type="button" class="chip active" data-method="email">Correo</button>
+      <button type="button" class="chip" data-method="phone">Celular</button>
     </div>
-    <div class="field">
-      <label>Contraseña</label>
-      <input type="password" id="loginPass" placeholder="••••••••" autocomplete="current-password">
+
+    <div id="loginEmailMethod">
+      <div class="field">
+        <label>Correo</label>
+        <input type="email" id="loginEmail" placeholder="tu@correo.com" autocomplete="username">
+      </div>
+      <div class="field">
+        <label>Contraseña</label>
+        <input type="password" id="loginPass" placeholder="••••••••" autocomplete="current-password">
+      </div>
+      <button class="link-btn" id="forgotPassBtn" style="padding-left:0;">¿Olvidaste tu contraseña?</button>
     </div>
-    <button class="link-btn" id="forgotPassBtn" style="padding-left:0;">¿Olvidaste tu contraseña?</button>
+
+    <div id="loginPhoneMethod" style="display:none;">
+      <div class="field" id="loginPhoneStep">
+        <label>Número de celular</label>
+        <input type="tel" id="loginPhone" placeholder="+57 300 1234567" autocomplete="tel">
+        <div id="recaptchaContainer" style="margin-top:10px;"></div>
+      </div>
+      <div class="field" id="loginCodeStep" style="display:none;">
+        <label>Código recibido por SMS</label>
+        <input type="text" id="loginPhoneCode" placeholder="123456" inputmode="numeric" autocomplete="one-time-code">
+        <button class="link-btn" id="changePhoneBtn" style="padding-left:0;">Cambiar número</button>
+      </div>
+    </div>
+
     <div class="modal-actions">
       <button class="btn btn-ghost" id="loginCancel">Cancelar</button>
       <button class="btn btn-primary" id="loginSubmit">Entrar</button>
@@ -1184,7 +1233,8 @@ import {
   getFirestore, collection, doc, setDoc, addDoc, updateDoc, deleteDoc, onSnapshot, query, orderBy, serverTimestamp, increment
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 import {
-  getAuth, onAuthStateChanged, signInWithEmailAndPassword, sendPasswordResetEmail, signOut
+  getAuth, onAuthStateChanged, signInWithEmailAndPassword, sendPasswordResetEmail, signOut,
+  RecaptchaVerifier, signInWithPhoneNumber
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 const firebaseConfig = {
@@ -1577,6 +1627,11 @@ function applySettings(){
   document.documentElement.style.setProperty('--clay-deep', shade(SETTINGS.accentColor, -0.2));
   renderFooterSocial();
   renderHeroCarousel();
+  const quoteCtaBtn = document.getElementById('quoteCtaBtn');
+  if(quoteCtaBtn && SETTINGS.whatsappNumber){
+    const quoteMsg = `Hola! Quiero pedir una cotización para algo que no veo en el catálogo de ${SETTINGS.brandName}.`;
+    quoteCtaBtn.href = `https://wa.me/${SETTINGS.whatsappNumber}?text=${encodeURIComponent(quoteMsg)}`;
+  }
   if(typeof renderGrid === 'function' && PRODUCTS.length) renderGrid();
   if(typeof renderCart === 'function') renderCart();
 
@@ -1633,6 +1688,29 @@ if(trustBandEl){
     trustObserver.observe(trustBandEl);
   } else {
     document.querySelectorAll('.trust-num').forEach(animateTrustNum);
+  }
+}
+
+/* ---------- Métricas del hero: contador animado + entrada ---------- */
+setTrustTarget('metaHandmade', 100);
+const heroMetaEl = document.getElementById('heroMeta');
+if(heroMetaEl){
+  const revealHeroMeta = () => {
+    heroMetaEl.classList.add('in-view');
+    document.querySelectorAll('#heroMeta .hero-meta-num').forEach(animateTrustNum);
+  };
+  if('IntersectionObserver' in window){
+    const heroMetaObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          revealHeroMeta();
+          heroMetaObserver.disconnect();
+        }
+      });
+    }, { threshold: 0.3 });
+    heroMetaObserver.observe(heroMetaEl);
+  } else {
+    revealHeroMeta();
   }
 }
 
@@ -1784,7 +1862,7 @@ function renderGrid(){
     return;
   }
   const list = currentFilter === 'todo' ? PRODUCTS : PRODUCTS.filter(p => p.cat === currentFilter);
-  document.getElementById('metaCount').textContent = PRODUCTS.length;
+  setTrustTarget('metaCount', PRODUCTS.length);
   if(list.length === 0){
     grid.innerHTML = `<div style="grid-column:1/-1; padding:60px 20px; text-align:center; color:var(--ink-soft); background:var(--card);">No hay piezas en esta categoría todavía.</div>`;
     return;
@@ -2103,6 +2181,7 @@ function openLogin(){
   loginOverlay.classList.add('open');
   document.getElementById('loginEmail').value = '';
   document.getElementById('loginPass').value = '';
+  setLoginMethod('email');
   document.getElementById('loginEmail').focus();
 }
 function closeLogin(){ loginOverlay.classList.remove('open'); }
@@ -2141,7 +2220,23 @@ document.getElementById('onboardingOverlay').addEventListener('click', e => {
   if(e.target.id === 'onboardingOverlay') dismissOnboarding();
 });
 
+// Números de celular autorizados para entrar como administrador (formato internacional, ej: "+573001234567").
+// Firebase no tiene una opción para "aprobar" números de antemano: cualquiera que reciba el código SMS queda
+// verificado, así que el filtro real vive aquí. Si dejas la lista vacía, CUALQUIER número verificado por SMS
+// entrará como admin; agrega tu número abajo para que solo tú puedas usar el acceso por celular.
+const ADMIN_ALLOWED_PHONES = [
+  // "+573001234567",
+];
+function isPhoneUser(user){
+  return !!user && user.providerData.some(p => p.providerId === 'phone');
+}
+
 onAuthStateChanged(auth, (user) => {
+  if(user && isPhoneUser(user) && ADMIN_ALLOWED_PHONES.length && !ADMIN_ALLOWED_PHONES.includes(user.phoneNumber)){
+    signOut(auth);
+    showToast("Este número no tiene acceso al panel de administrador");
+    return;
+  }
   isAdmin = !!user;
   if(isAdmin){ subscribeOrders(); subscribeAnalytics(); } else { unsubscribeOrdersFn(); unsubscribeAnalyticsFn(); }
   const notifWrap = document.getElementById('notifWrap');
@@ -2157,8 +2252,91 @@ document.getElementById('adminOpenBtn').addEventListener('click', () => {
   if(isAdmin){ openAdmin(); } else { openLogin(); }
 });
 document.getElementById('loginCancel').addEventListener('click', closeLogin);
-document.getElementById('loginSubmit').addEventListener('click', tryLogin);
 document.getElementById('loginPass').addEventListener('keydown', e => { if(e.key === 'Enter') tryLogin(); });
+
+/* ---------- Acceso por celular (SMS) ---------- */
+let loginMethod = 'email';
+let recaptchaVerifier = null;
+let phoneConfirmationResult = null;
+const loginMethodTabs = document.getElementById('loginMethodTabs');
+const loginEmailMethod = document.getElementById('loginEmailMethod');
+const loginPhoneMethod = document.getElementById('loginPhoneMethod');
+const loginPhoneStep = document.getElementById('loginPhoneStep');
+const loginCodeStep = document.getElementById('loginCodeStep');
+const loginSubmitBtn = document.getElementById('loginSubmit');
+
+function setLoginMethod(method){
+  loginMethod = method;
+  loginMethodTabs.querySelectorAll('.chip').forEach(c => c.classList.toggle('active', c.dataset.method === method));
+  loginEmailMethod.style.display = method === 'email' ? 'block' : 'none';
+  loginPhoneMethod.style.display = method === 'phone' ? 'block' : 'none';
+  resetPhoneStep();
+}
+function resetPhoneStep(){
+  phoneConfirmationResult = null;
+  loginPhoneStep.style.display = 'block';
+  loginCodeStep.style.display = 'none';
+  document.getElementById('loginPhoneCode').value = '';
+  loginSubmitBtn.textContent = loginMethod === 'phone' ? 'Enviar código' : 'Entrar';
+}
+loginMethodTabs.addEventListener('click', e => {
+  const btn = e.target.closest('.chip');
+  if(!btn) return;
+  setLoginMethod(btn.dataset.method);
+});
+document.getElementById('changePhoneBtn').addEventListener('click', resetPhoneStep);
+
+function getRecaptcha(){
+  if(!recaptchaVerifier){
+    recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptchaContainer', { size: 'invisible' });
+  }
+  return recaptchaVerifier;
+}
+
+async function sendPhoneCode(){
+  const raw = document.getElementById('loginPhone').value.trim();
+  if(!raw){ showToast("Escribe tu número de celular"); return; }
+  // Si no escriben el indicativo del país, asumimos Colombia (+57).
+  const phone = raw.startsWith('+') ? raw.replace(/\s+/g, '') : ('+57' + raw.replace(/\D/g, ''));
+  try{
+    const verifier = getRecaptcha();
+    phoneConfirmationResult = await signInWithPhoneNumber(auth, phone, verifier);
+    loginPhoneStep.style.display = 'none';
+    loginCodeStep.style.display = 'block';
+    loginSubmitBtn.textContent = 'Verificar';
+    showToast("Te enviamos un código por SMS");
+  } catch(err){
+    console.error(err);
+    showToast("No se pudo enviar el código. Revisa el número.");
+    if(recaptchaVerifier){ recaptchaVerifier.clear(); recaptchaVerifier = null; }
+  }
+}
+
+async function verifyPhoneCode(){
+  const code = document.getElementById('loginPhoneCode').value.trim();
+  if(!code){ showToast("Escribe el código que te llegó por SMS"); return; }
+  if(!phoneConfirmationResult){ showToast("Primero solicita el código"); return; }
+  try{
+    const result = await phoneConfirmationResult.confirm(code);
+    const phoneNumber = result.user.phoneNumber;
+    if(ADMIN_ALLOWED_PHONES.length && !ADMIN_ALLOWED_PHONES.includes(phoneNumber)){
+      await signOut(auth);
+      showToast("Este número no tiene acceso al panel de administrador");
+      return;
+    }
+    isAdmin = true;
+    closeLogin();
+    openAdmin();
+  } catch(err){
+    console.error(err);
+    showToast("Código incorrecto");
+  }
+}
+
+document.getElementById('loginSubmit').addEventListener('click', () => {
+  if(loginMethod === 'email'){ tryLogin(); return; }
+  if(loginCodeStep.style.display === 'none'){ sendPhoneCode(); } else { verifyPhoneCode(); }
+});
 
 async function tryLogin(){
   const email = document.getElementById('loginEmail').value.trim();
